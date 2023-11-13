@@ -48,7 +48,8 @@ const app = Vue.createApp({
         this.monsterWin++;
       } else if (value <= 0) {
         this.hideGameOver = true;
-        this.img = "cup.png";
+        this.setImg("cup.png");
+
 
         this.msg = "ENNEMY FELLED";
         this.playerWin++;
