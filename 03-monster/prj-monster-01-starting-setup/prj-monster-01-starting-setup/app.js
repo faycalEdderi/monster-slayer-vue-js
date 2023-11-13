@@ -123,7 +123,7 @@ const app = Vue.createApp({
       this.setImg("flag.png");
     },
     setImg(imgName){
-        this.img= imgName;
+        this.img= "img/" + imgName;
     }
   },
 });
