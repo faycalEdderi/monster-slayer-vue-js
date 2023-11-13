@@ -19,6 +19,7 @@ const app = Vue.createApp({
       img: "",
       playerWin: 0,
       monsterWin: 0,
+      messageLog: [],
     };
   },
 
@@ -50,7 +51,6 @@ const app = Vue.createApp({
         this.hideGameOver = true;
         this.setImg("cup.png");
 
-
         this.msg = "ENNEMY FELLED";
         this.playerWin++;
       }
@@ -81,28 +81,37 @@ const app = Vue.createApp({
 
   methods: {
     attackMonster() {
+      const attack = getRandomValue(5, 12);
       this.currentRound++;
-      this.monsterHealth -= getRandomValue(5, 12);
+      this.monsterHealth -= attack;
       this.attackPlayer();
+
+      this.addLogMessage("You", "attack", attack);
     },
 
     attackPlayer() {
-      this.playerHealth -= getRandomValue(8, 15);
+      const attack = getRandomValue(8, 15);
+      this.playerHealth -= attack;
+      this.addLogMessage("Monster", "attack", attack);
     },
 
     specialAttackMonster() {
+      const attack = getRandomValue(10, 20);
       this.currentRound++;
-      this.monsterHealth -= getRandomValue(10, 20);
+      this.monsterHealth -= attack;
       this.attackPlayer();
+      this.addLogMessage("You", "special-attack", attack);
     },
     healPlayer() {
       this.currentRound++;
-      const healtValue = getRandomValue(8, 20);
+      const healtValue = getRandomValue(10, 35);
       if (this.playerHealth + healtValue > 100) {
         this.playerHealth = 100;
       } else {
         this.playerHealth += healtValue;
       }
+      this.addLogMessage("You", "heal", healtValue);
+
       this.attackPlayer();
     },
     restart() {
@@ -114,18 +123,26 @@ const app = Vue.createApp({
       this.hideAttack = true;
       this.msg = "";
       this.img = "";
+      this.messageLog = [];
       // location.reload();
     },
     surrender() {
       this.hideAttack = false;
       this.hideGameOver = true;
-      this.msg="You surrendered";
+      this.msg = "You surrendered";
       this.monsterWin++;
       this.setImg("flag.png");
     },
-    setImg(imgName){
-        this.img= "img/" + imgName;
-    }
+    setImg(imgName) {
+      this.img = "img/" + imgName;
+    },
+    addLogMessage(who, what, value) {
+      this.messageLog.unshift({
+        actionBy : who,
+        actionType : what,
+        actionValue : value
+      });
+    },
   },
 });
 
