@@ -51,8 +51,7 @@
         <ul>
           <li v-for="msg in messageLog">
 
-          <span v-if="msg.actionBy === 'You'"><span class="log--player">{{ msg.actionBy }}</span></span>
-          <span v-else><span class="log--monster">{{ msg.actionBy }}</span></span>
+          <span><span :class="{'log--player': msg.actionBy === 'You' , 'log--monster':  msg.actionBy === 'Monster'}">{{ msg.actionBy }}</span></span>
 
           <span v-if="msg.actionType === 'heal' "> heal yourself for  <span class="log--heal">{{ msg.actionValue }}</span> points </span>
           <span v-else> make <span class="log--damage">{{msg.actionValue}}</span> damages</span>
